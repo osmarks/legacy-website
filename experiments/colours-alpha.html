@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<head>
+    <!--# include virtual="/header.html" -->
+    <meta description="Lets you explore the Colours of the Alphabet.">
+</head>
+
+<body>
+    <style>
+    #colOut .charOut {
+        font-size: 8.5vw;
+        font-family: Fira Mono, Courier New, Courier, monospace;
+    }
+
+    #chars {
+        width: 100%;
+    }
+
+    textarea {
+        font-size: 3vw;
+    }
+    </style>
+
+    <!--# include virtual="/navbar.html" -->
+
+    <div class="main-content">
+        <div id="colOut">
+        </div>
+
+        <hr>
+
+        <textarea rows="5" type="text" placeholder="Enter some text" oninput="setFromInput(this)" id="chars"></textarea>
+    </div>
+
+    <script>
+    String.prototype.forEach = function(callback)
+    {
+        for (let i = 0; i < this.length; i++)
+            callback(this[i]);
+    }
+
+    const beginAlpha = 97;
+    const endAlpha = 122;
+
+    const numChars = endAlpha - beginAlpha + 1
+
+    const colMax = 4096;
+
+    let alpha = {}
+
+    for (let charCode = beginAlpha; charCode <= endAlpha; charCode++)
+    {
+        alpha[String.fromCharCode(charCode)] = charCode - beginAlpha;
+    }
+
+    const charOut = document.getElementById("charOut");
+    const colOut = document.getElementById("colOut");
+
+    let pad3 = num => ("000" + num).substr(-3, 3); // Pads out a number so that it is exactly 3 digits long.
+
+    // Using "alpha" as an alphabet, converts inputted char to a numeric colorcode based on its alphabetical position
+    function getAlphaCol(char)
+    {
+        return alpha[char] / numChars * colMax + 1; // Prevent zeroes' inclusion.
+        // We should not have zeroes in the output because the complementary colour would be calculated as colMax and truncated.
+    }
+
+    function getComplementaryCol(col)
+    {
+        return colMax - col;
+    }
+
+    function toShortHex(col)
+    {
+        let hexCode = Math.round(col).toString(16);
+        return "#" + pad3(hexCode);
+    }
+
+    function colorAlphabetically(elBack, elText, char, doBG)
+    {
+        if (doBG === undefined || doBG === null) // Default doBG to true
+            doBG = true
+
+        let alphaCol = getAlphaCol(char); // Compute colour from inputted char.
+        let complementaryCol = getComplementaryCol(alphaCol);
+
+        if (doBG)
+            elBack.style.backgroundColor = toShortHex(alphaCol);
+        elText.style.color = toShortHex(doBG ? complementaryCol : alphaCol);
+    }
+
+    function removeChildren(el)
+    {
+        while (el.firstChild)
+            el.removeChild(el.firstChild);
+    }
+
+    function colourAllChars(el, doBG)
+    {
+        let newChildren = [];
+        let chars = el.innerText;
+
+        chars.forEach(
+            char => {
+                let child = document.createElement("span");
+                child.setAttribute("class", "charOut");
+                colorAlphabetically(child, child, char.toLowerCase(), doBG);
+
+                child.innerHTML = char;
+
+                newChildren.push(child);
+            }
+        );
+
+        removeChildren(el);
+
+        newChildren.forEach(
+            child => el.appendChild(child)
+        );
+    }
+
+    function setFromInput(el)
+    {
+        let input = el.value;
+
+        colOut.innerText = input;
+        colourAllChars(colOut, true);
+    }
+    </script>
+</body>
