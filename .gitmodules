@@ -1,0 +1,3 @@
+[submodule "experiments/game-of-life"]
+	path = experiments/game-of-life
+	url = https://gitlab.com/osmarks/game-of-life

@@ -4,4 +4,4 @@
 * [Infinite Lorem Ipsum](lorem/) is something I decided to make after being inspired by [endless.horse](https://endless.horse).
 * [RPNCalc](calc/) could use a better name and is basically a stack-based calculator. One day it might even do subtraction!
 * [AutoScorer](scorer/) can keep numerical scores during games. It was designed for use handling Monopoly money but is pretty generic.
-* Game of Life is not yet available on this website. It's a simple in-browser F# implementation of John Conway's Game of Life. Source [here](https://gitlab.com/osmarks/game-of-life).
+* [Game of Life](game-of-life/) is now available on this website. It's a simple in-browser F# implementation of John Conway's Game of Life. Source [here](https://gitlab.com/osmarks/game-of-life).
