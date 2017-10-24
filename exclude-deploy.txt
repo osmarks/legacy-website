@@ -1,4 +1,0 @@
-.git*
-*node_modules*
-*packages*
-*__pycache__*

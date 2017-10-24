@@ -99,3 +99,7 @@ td.on {
 td.off {
     background: transparent;
 }
+
+.no-underline {
+    text-decoration: none;
+}
