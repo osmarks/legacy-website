@@ -1,3 +1,4 @@
+<pre>
 Your IP: {{.IP}}
 Server IP: {{.ServerIP}}
 URI: {{.URI}}
@@ -9,3 +10,4 @@ Headers:
 {{range $field, $val := .Req.Header}}
     {{$field}}: {{$val}}
 {{end}}
+</pre>
