@@ -1,0 +1,11 @@
+Your IP: {{.IP}}
+Server IP: {{.ServerIP}}
+URI: {{.URI}}
+{{if .IsMITM}}
+    MITM: Likely
+{{end}}
+DCFV Code: {{.RandomString 10 12}}
+Headers:
+{{range $field, $val := .Req.Header}}
+    {{$field}}: {{$val}}
+{{end}}
