@@ -1,117 +1,110 @@
-<html>
-    <head>
-        {{.Include "/header.html"}}
-    </head>
-    <body>
-        {{.Include "/navbar.html"}}
+---
+title: IdeaGen
+---
 
-        <div id="app" class="main-content">
-            <noscript>
-                The Idea Generator requires JavaScript to function.
-            </noscript>
-            <div>{{text}}</div>
-            <button @click="randomize">Randomize</button>
-        </div>
+<noscript>
+    The Idea Generator requires JavaScript to function.
+</noscript>
+<div>{{text}}</div>
+<button @click="randomize">Randomize</button>
 
-        <script src="//unpkg.com/vue/dist/vue.min.js"></script>
-        <script>
-        var things = [
-            "cat",
-            "app",
-            "idea generator",
-            "dog",
-            "idea",
-            "problem",
-            "chair",
-            "sandwich",
-            "ice cream",
-            "town",
-            "book",
-            "country",
-            "computer",
-            "duct tape",
-            "apple juice",
-            "cow",
-            "lamp"
-        ];
-
-        var actions = [
-            "talk to",
-            "make",
-            "find",
-            "delete",
-            "meet",
-            "solve",
-            "sit on",
-            "eat",
-            "enlighten",
-            "believe in",
-            "change",
-            "take",
-            "study",
-            "use",
-            "visit",
-            "understand",
-            "read",
-            "travel to",
-            "buy",
-            "sell",
-            "encourage"
-        ];
-
-        var vowels = ["a", "e", "i", "o", "u"];
-
-        function connectWithA(before, after) {
-            var firstLetter = after[0];
-            return vowels.indexOf(firstLetter) > -1 ? "an" : "a";
-        }
-
-        var connectors = [
-            "your",
-            "my",
-            connectWithA,
-            "the",
-            "someone's",
-            "another"
-        ]
-
-        var pickRandom = function(l) {
-            return l[Math.floor(Math.random() * l.length)];
-        }
-
-        var vm = new Vue({
-            el: "#app",
-            data: {
-                currentAction: "",
-                currentThing: "",
-                currentConnector: ""
-            },
-            computed: {
-                text() {
-                    var connector = this.currentConnector;
-                    var action = this.currentAction;
-                    var thing = this.currentThing;
-
-                    var connection;
-
-                    if (typeof connector === "string") // The current connector is a simple string
-                        connection = connector;
-                    else // The current connector is a connector function
-                        connection = connector(action, thing);
-
-                    return action + " " + connection + " " + thing;
-                }
-            },
-            methods: {
-                randomize() {
-                    this.currentAction = pickRandom(actions);
-                    this.currentThing = pickRandom(things);
-                    this.currentConnector = pickRandom(connectors)
-                }
+<script src="//unpkg.com/vue/dist/vue.min.js"></script>
+<script>
+    var things = [
+    "cat",
+    "app",
+    "idea generator",
+    "dog",
+    "idea",
+    "problem",
+    "chair",
+    "sandwich",
+    "ice cream",
+    "town",
+    "book",
+    "country",
+    "computer",
+    "duct tape",
+    "apple juice",
+    "cow",
+    "lamp"
+    ];
+    
+    var actions = [
+    "talk to",
+    "make",
+    "find",
+    "delete",
+    "meet",
+    "solve",
+    "sit on",
+    "eat",
+    "enlighten",
+    "believe in",
+    "change",
+    "take",
+    "study",
+    "use",
+    "visit",
+    "understand",
+    "read",
+    "travel to",
+    "buy",
+    "sell",
+    "encourage"
+    ];
+    
+    var vowels = ["a", "e", "i", "o", "u"];
+    
+    function connectWithA(before, after) {
+        var firstLetter = after[0];
+        return vowels.indexOf(firstLetter) > -1 ? "an" : "a";
+    }
+    
+    var connectors = [
+    "your",
+    "my",
+    connectWithA,
+    "the",
+    "someone's",
+    "another"
+    ]
+    
+    var pickRandom = function(l) {
+        return l[Math.floor(Math.random() * l.length)];
+    }
+    
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            currentAction: "",
+            currentThing: "",
+            currentConnector: ""
+        },
+        computed: {
+            text() {
+                var connector = this.currentConnector;
+                var action = this.currentAction;
+                var thing = this.currentThing;
+                
+                var connection;
+                
+                if (typeof connector === "string") // The current connector is a simple string
+                connection = connector;
+                else // The current connector is a connector function
+                connection = connector(action, thing);
+                
+                return action + " " + connection + " " + thing;
             }
-        });
-
-        vm.randomize();
-        </script>
-    </body>
-</html>
+        },
+        methods: {
+            randomize() {
+                this.currentAction = pickRandom(actions);
+                this.currentThing = pickRandom(things);
+                this.currentConnector = pickRandom(connectors)
+            }
+        }
+    });
+    
+    vm.randomize();
+</script>

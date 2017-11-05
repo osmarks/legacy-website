@@ -1,4 +1,7 @@
-# A collection of FTL tips
+---
+title: A collection of FTL tips
+published: 05/11/2017
+---
 * Use Cloaking *after* enemy weapons have fired so that they miss.
 * Upgrade Shields as soon as possible; many early-sector enemies can't get through 2 shields.
 * Any of your crew inside the medbay will be healed, they don't have to be standing still.

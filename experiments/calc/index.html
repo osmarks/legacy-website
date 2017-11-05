@@ -1,22 +1,14 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<link rel="stylesheet" href="/assets/style/calc.css">
-		{{.Include "/header.html"}}
-		<meta description="Reverse Polish Notation calculator.">
-	</head>
+---
+title: RPNCalc
+---
 
-	<body>
-		{{.Include "/navbar.html"}}
+<link rel="stylesheet" href="/assets/style/calc.css">
 
-		<div class="main-content">
-			<center><div id="output"></div></center>
+<center><div id="output"></div></center>
 
-			<hr>
+<hr>
 
-			<input type="text" id="input" default="Input RPN expression" oninput="calculateFromInput()">
-		</div>
+<input type="text" id="input" default="Input RPN expression" oninput="calculateFromInput()">
+</div>
 
-		<script src="calc.js"></script>
-	</body>
-</html>
+<script src="./calc.js"></script>

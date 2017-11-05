@@ -1,5 +1,8 @@
-# Markdown rendering test page
-This page contains a bit of Markdown plus some code snippets in order to test serverside markdown rendering & clientside syntax highlighting.
+---
+title: Markdown test page
+published: 05/11/2017
+---
+This page contains a bit of Markdown plus some code snippets in order to test my Markdown handling.
 
 ## This is a smaller header
 ### Smaller
@@ -11,7 +14,7 @@ This page contains a bit of Markdown plus some code snippets in order to test se
 
 ----
 
-~~~~
+```haskell
 import Data.List (nub)
 import System.Environment
 
@@ -25,9 +28,9 @@ main = do
 
     args <- getArgs
     putStrLn $ nub $ foldMap (++ " ") args
-~~~~
+```
 
-~~~~
+```F#
 open System.Blahblah
 
 [<EntryPoint>]
@@ -35,9 +38,9 @@ let main argv =
     printfn "%A" argv
     printfn "Hello world!"
     0
-~~~~
+```
 
-~~~~
+```javascript
 function blah(a, b, c) {
     return a * b - c + b;
 }
@@ -45,4 +48,4 @@ function blah(a, b, c) {
 let useless = x => x + 1;
 
 console.log(useless(blah(1, "a", undefined)))
-~~~~
+```

@@ -1,4 +1,6 @@
-# My collection of experiments
+---
+title: Experiments
+---
 * [Lunar Lander](lander/) is a simple (and somewhat broken currently) moon landing game (note: has no actual aim).
 * [Colours of the Alphabet](colours-alpha.html) shows you the alphabet's many colours. It could theoretically be extended to the full ASCII char space quite easily.
 * [Infinite Lorem Ipsum](lorem/) is something I decided to make after being inspired by [endless.horse](https://endless.horse).
