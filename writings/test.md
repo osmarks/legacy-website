@@ -30,17 +30,8 @@ main = do
     putStrLn $ nub $ foldMap (++ " ") args
 ```
 
-```F#
-open System.Blahblah
-
-[<EntryPoint>]
-let main argv =
-    printfn "%A" argv
-    printfn "Hello world!"
-    0
-```
-
 ```javascript
+// New Javascript framework: blah.js
 function blah(a, b, c) {
     return a * b - c + b;
 }
@@ -48,4 +39,13 @@ function blah(a, b, c) {
 let useless = x => x + 1;
 
 console.log(useless(blah(1, "a", undefined)))
+```
+
+```c
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!")
+    return 0;
+}
 ```

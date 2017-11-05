@@ -1,47 +1,38 @@
-<!DOCTYPE HTML>
+---
+title: Lorem Ipsum
+---
 
-<html>
-	<head>
-		{{.Include "/header.html"}}
-		<meta description="An infinite stream of Lorem Ipsum delivered directly to your page">
+<style>
+	body {
+		overflow-y: scroll;
+		overflow-x: hidden;
+		position: relative;
+	}
+	
+	#marker {
+		width: 1px;
+		height: 1px;
+		
+		position: absolute;
+		bottom: 10vh;
+	}
+	
+	#text {
+		padding-left: 2vw;
+		padding-right: 2vw;
+		padding-top: 2vw;
+	}
+</style>
 
-		<style>
-		body {
-			overflow-y: scroll;
-			overflow-x: hidden;
-			position: relative;
-		}
+<div id="text"></div>
 
-		#marker {
-			width: 1px;
-			height: 1px;
-
-			position: absolute;
-			bottom: 10vh;
-		}
-
-		#text {
-			padding-left: 2vw;
-			padding-right: 2vw;
-			padding-top: 2vw;
-		}
-		</style>
-	</head>
-
-	<body>
-		{{.Include "/navbar.html"}}
-
-		<div id="text" class="main-content"></div>
-
-		<script src="/assets/js/lorem.js"></script>
-		<script src="/assets/js/infiscroll.js"></script>
-		<script>
-		var textEl = document.querySelector("#text");
-
-		infiscroll(function() {
-			textEl.innerText += Lorem.createText(1, Lorem.TYPE.PARAGRAPH);
-			console.log("Scrolled down, generating lorem.");
-		}, "5vh", 20);
-		</script>
-	</body>
-</html>
+<script src="/assets/js/lorem.js"></script>
+<script src="/assets/js/infiscroll.js"></script>
+<script>
+	var textEl = document.querySelector("#text");
+	
+	infiscroll(function() {
+		textEl.innerText += Lorem.createText(1, Lorem.TYPE.PARAGRAPH);
+		console.log("Scrolled down, generating lorem.");
+	}, "20vh", 20);
+</script>

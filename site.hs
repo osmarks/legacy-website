@@ -1,10 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 import Hakyll
-import Data.Monoid ((<>), mconcat)
+import Data.Monoid ((<>))
 
 main :: IO ()
 main = hakyll $ do
     match "templates/*" $ compile templateBodyCompiler
+
+    match "assets/js/*" passthrough
 
     match "assets/style/*" $ do
         route idRoute
@@ -12,7 +14,7 @@ main = hakyll $ do
 
     match "assets/images/*" passthrough
 
-    match "**/*.md" $ do
+    match "**.md" $ do
         route $ setExtension "html"
         compile $ 
             pandocCompiler 
@@ -20,13 +22,11 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" context
             >>= relativizeUrls
 
-    match "experiments/**.html" $ do
-        route $ idRoute
-        compile $
-            getResourceBody
-            >>= loadAndApplyTemplate "templates/default.html" context
+    match "experiments/**.html" inDefaultTemplate
 
     match "experiments/**" passthrough
+
+    match "errors/**" inDefaultTemplate
 
     create ["writings/index.html"] $ do
         let pages = loadAll writingsGlob
@@ -42,7 +42,7 @@ main = hakyll $ do
     create ["rss.xml"] $ do
         route idRoute
         compile $ do
-            let feedContext = context <> bodyField "description" <> dateField "date" "dd/mm/yyyy"
+            let feedContext = context <> bodyField "description" <> dateField "date" "dd/mm/yyyy" <> constField "updated" "???"
             stuff <- loadAllSnapshots writingsGlob "content"
             renderRss feedConf feedContext stuff
 
@@ -51,6 +51,9 @@ writingsGlob = "writings/*.md"
 
 passthrough :: Rules ()
 passthrough = route idRoute >> compile copyFileCompiler
+
+inDefaultTemplate :: Rules ()
+inDefaultTemplate = route idRoute >> compile (getResourceBody >>= loadAndApplyTemplate "templates/default.html" context)
 
 context :: Context String
 context = defaultContext

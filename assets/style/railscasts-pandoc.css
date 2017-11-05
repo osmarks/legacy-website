@@ -1,0 +1,100 @@
+/*
+
+Railscasts-like style (c) Visoft, Inc. (Damien White)
+
+*/
+
+.sourceCode {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    background: #232323;
+    color: #e6e1dc;
+}
+
+.co,
+.st {
+    color: #bc9458;
+    font-style: italic;
+}
+
+.kw {
+    color: #c26230;
+}
+
+.ss,
+.va,
+.ot {
+    color: #a5c261;
+}
+
+.dv {
+    color: #519f50;
+}
+
+.im,
+.at {
+    color: #e8bf6a;
+}
+
+.dt {
+    color: #da4939;
+}
+
+
+.op,
+.fu,
+.bu {
+    color: #6d9cbe;
+}
+
+.hljs-params {
+    color: #d0d0ff;
+}
+
+.hljs-attribute {
+    color: #cda869;
+}
+
+.pp {
+    color: #9b859d;
+}
+
+.hljs-title,
+.hljs-section {
+    color: #ffc66d;
+}
+
+.hljs-addition {
+    background-color: #144212;
+    color: #e6e1dc;
+    display: inline-block;
+    width: 100%;
+}
+
+.hljs-deletion {
+    background-color: #600;
+    color: #e6e1dc;
+    display: inline-block;
+    width: 100%;
+}
+
+.hljs-selector-class {
+    color: #9b703f;
+}
+
+.hljs-selector-id {
+    color: #8b98ab;
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
+}
+
+.hljs-link {
+    text-decoration: underline;
+}
