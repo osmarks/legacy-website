@@ -46,6 +46,9 @@ main = hakyll $ do
             stuff <- loadAllSnapshots writingsGlob "content"
             renderRss feedConf feedContext stuff
 
+allContent :: Pattern
+allContent = fromList ["writings/**", "experiments/**"]
+
 writingsGlob :: Pattern
 writingsGlob = "writings/*.md"
 
