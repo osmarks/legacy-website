@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import Hakyll
 import Data.Monoid ((<>))
+import System.FilePath.Posix
 
 main :: IO ()
 main = hakyll $ do
@@ -14,17 +15,13 @@ main = hakyll $ do
 
     match "assets/images/*" passthrough
 
-    match "**.md" $ do
-        route $ setExtension "html"
-        compile $ 
-            pandocCompiler 
-            >>= saveSnapshot "content"
-            >>= loadAndApplyTemplate "templates/default.html" context
-            >>= relativizeUrls
+    match "writings/**.md" $ do
+        route $ setExtension "html" `composeRoutes` toSlug
+        compile mdCompile
+    match "**index.md" $ route (setExtension "html") >> compile mdCompile
 
-    match "experiments/**.html" inDefaultTemplate
-
-    match "experiments/**" passthrough
+    match "experiments/**.html" $ inDefaultTemplateR removeFirstPart
+    match "experiments/**" $ passthroughR removeFirstPart
 
     match "errors/**" inDefaultTemplate
 
@@ -52,14 +49,39 @@ allContent = fromList ["writings/**", "experiments/**"]
 writingsGlob :: Pattern
 writingsGlob = "writings/*.md"
 
+mdCompile :: Compiler (Item String)
+mdCompile = pandocCompiler 
+    >>= saveSnapshot "content"
+    >>= loadAndApplyTemplate "templates/default.html" context
+    >>= relativizeUrls
+
+-- Just copy the file into the given route
+passthroughR :: Routes -> Rules ()
+passthroughR r = route r >> compile copyFileCompiler
+
 passthrough :: Rules ()
-passthrough = route idRoute >> compile copyFileCompiler
+passthrough = passthroughR idRoute
+
+-- Applies the default template to a resource, and applies the supplied route to it
+inDefaultTemplateR :: Routes -> Rules ()
+inDefaultTemplateR r = route r >> compile (getResourceBody >>= loadAndApplyTemplate "templates/default.html" context)
 
 inDefaultTemplate :: Rules ()
-inDefaultTemplate = route idRoute >> compile (getResourceBody >>= loadAndApplyTemplate "templates/default.html" context)
+inDefaultTemplate = inDefaultTemplateR idRoute
 
+-- Base context for where context is used
 context :: Context String
 context = defaultContext
+
+-- Removes the first part from a path ("/abcd/efgh" -> "/efgh")
+removeFirstPart :: Routes
+removeFirstPart = customRoute (joinPath . tail . splitPath . toFilePath)
+
+-- Gives a file a clean name and puts it at the webroot
+toSlug :: Routes
+toSlug = customRoute (indexAndMove . toFilePath)
+    where
+        indexAndMove p = takeBaseName p </> "index.html"
 
 feedConf :: FeedConfiguration
 feedConf = FeedConfiguration
