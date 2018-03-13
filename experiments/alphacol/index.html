@@ -27,7 +27,7 @@ title: Colours of the Alphabet
 <script>
     String.prototype.forEach = function(callback)
     {
-        for (let i = 0; i < this.length; i++)
+        for (var i = 0; i < this.length; i++)
         callback(this[i]);
     }
     
@@ -38,9 +38,9 @@ title: Colours of the Alphabet
     
     const colMax = 4096;
     
-    let alpha = {}
+    var alpha = {}
     
-    for (let charCode = beginAlpha; charCode <= endAlpha; charCode++)
+    for (var charCode = beginAlpha; charCode <= endAlpha; charCode++)
     {
         alpha[String.fromCharCode(charCode)] = charCode - beginAlpha;
     }
@@ -48,7 +48,7 @@ title: Colours of the Alphabet
     const charOut = document.getElementById("charOut");
     const colOut = document.getElementById("colOut");
     
-    let pad3 = num => ("000" + num).substr(-3, 3); // Pads out a number so that it is exactly 3 digits long.
+    var pad3 = function(num) {("000" + num).substr(-3, 3)}; // Pads out a number so that it is exactly 3 digits long.
     
     // Using "alpha" as an alphabet, converts inputted char to a numeric colorcode based on its alphabetical position
     function getAlphaCol(char)
@@ -64,7 +64,7 @@ title: Colours of the Alphabet
     
     function toShortHex(col)
     {
-        let hexCode = Math.round(col).toString(16);
+        var hexCode = Math.round(col).toString(16);
         return "#" + pad3(hexCode);
     }
     
@@ -73,8 +73,8 @@ title: Colours of the Alphabet
         if (doBG === undefined || doBG === null) // Default doBG to true
         doBG = true
         
-        let alphaCol = getAlphaCol(char); // Compute colour from inputted char.
-        let complementaryCol = getComplementaryCol(alphaCol);
+        var alphaCol = getAlphaCol(char); // Compute colour from inputted char.
+        var complementaryCol = getComplementaryCol(alphaCol);
         
         if (doBG)
         elBack.style.backgroundColor = toShortHex(alphaCol);
@@ -89,12 +89,12 @@ title: Colours of the Alphabet
     
     function colourAllChars(el, doBG)
     {
-        let newChildren = [];
-        let chars = el.innerText;
+        var newChildren = [];
+        var chars = el.innerText;
         
         chars.forEach(
-        char => {
-            let child = document.createElement("span");
+        function(char) {
+            var child = document.createElement("span");
             child.setAttribute("class", "charOut");
             colorAlphabetically(child, child, char.toLowerCase(), doBG);
             
@@ -107,13 +107,13 @@ title: Colours of the Alphabet
         removeChildren(el);
         
         newChildren.forEach(
-        child => el.appendChild(child)
+        function(child) {el.appendChild(child)}
         );
     }
     
     function setFromInput(el)
     {
-        let input = el.value;
+        var input = el.value;
         
         colOut.innerText = input;
         colourAllChars(colOut, false);
