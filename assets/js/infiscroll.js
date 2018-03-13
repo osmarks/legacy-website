@@ -19,7 +19,7 @@ function addMarker(markerPos) {
 
     var el = document.createElement("div");
     el.style.position = "absolute";
-    el.style.bottom = "5vh";
+    el.style.bottom = markerPos;
     el.style.width = "1px";
     el.style.height = "1px";
 
