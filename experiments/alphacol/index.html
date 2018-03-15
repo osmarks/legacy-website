@@ -88,7 +88,7 @@ title: Colours of the Alphabet
                 }
 
                 return this.input.split("").map(function(character) {
-                    return {style: {"color": conversionFunction(character)}, char: character}
+                    return {style: {"color": conversionFunction(character.toLowerCase())}, char: character}
                 });
             }
         },
