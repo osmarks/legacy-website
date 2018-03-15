@@ -4,7 +4,7 @@ title: Colours of the Alphabet
 
 <style>
     #colOut .charOut {
-        font-size: 8.5vw;
+        font-size: 2em;
         font-family: Fira Mono, Courier New, Courier, monospace;
     }
     
@@ -13,15 +13,26 @@ title: Colours of the Alphabet
     }
     
     textarea {
-        font-size: 3vw;
+        font-size: 2em;
     }
 </style>
-<div id="colOut">
-</div>
 
-<hr>
+<script src="/assets/js/vue.js"></script>
 
-<textarea rows="5" type="text" placeholder="Enter some text" oninput="setFromInput(this)" id="chars"></textarea>
+<div id="app">
+    <div id="colOut">
+        <span v-for="c in coloredChars" :style="c.style" class="charOut">{{c.char}}</span>
+    </div>
+
+    <hr>
+
+    <textarea rows="5" type="text" placeholder="Enter some text" id="chars" v-model="input"></textarea>
+
+    <div>Colorization Mode: </div>
+    <select v-model="method">
+        <option value="rgb">RGB</option>
+        <option value="hsl">HSL</option>
+    </select>
 </div>
 
 <script>
@@ -31,12 +42,12 @@ title: Colours of the Alphabet
         callback(this[i]);
     }
     
-    const beginAlpha = 97;
-    const endAlpha = 122;
+    var beginAlpha = 97;
+    var endAlpha = 122;
     
-    const numChars = endAlpha - beginAlpha + 1
+    var numChars = endAlpha - beginAlpha + 1
     
-    const colMax = 4096;
+    var colMax = 4096;
     
     var alpha = {}
     
@@ -45,21 +56,13 @@ title: Colours of the Alphabet
         alpha[String.fromCharCode(charCode)] = charCode - beginAlpha;
     }
     
-    const charOut = document.getElementById("charOut");
-    const colOut = document.getElementById("colOut");
+    var charOut = document.getElementById("charOut");
+    var colOut = document.getElementById("colOut");
     
-    var pad3 = function(num) {("000" + num).substr(-3, 3)}; // Pads out a number so that it is exactly 3 digits long.
-    
-    // Using "alpha" as an alphabet, converts inputted char to a numeric colorcode based on its alphabetical position
-    function getAlphaCol(char)
-    {
-        return alpha[char] / numChars * colMax + 1; // Prevent zeroes' inclusion.
-        // We should not have zeroes in the output because the complementary colour would be calculated as colMax and truncated.
-    }
-    
-    function getComplementaryCol(col)
-    {
-        return colMax - col;
+    var pad3 = function(num) {return ("000" + num).substr(-3, 3)}; // Pads out a number so that it is exactly 3 digits long.
+
+    function rescaleAlpha(char, max) {
+        return alpha[char] / numChars * max;
     }
     
     function toShortHex(col)
@@ -68,54 +71,34 @@ title: Colours of the Alphabet
         return "#" + pad3(hexCode);
     }
     
-    function colorAlphabetically(elBack, elText, char, doBG)
-    {
-        if (doBG === undefined || doBG === null) // Default doBG to true
-        doBG = true
-        
-        var alphaCol = getAlphaCol(char); // Compute colour from inputted char.
-        var complementaryCol = getComplementaryCol(alphaCol);
-        
-        if (doBG)
-        elBack.style.backgroundColor = toShortHex(alphaCol);
-        elText.style.color = toShortHex(doBG ? complementaryCol : alphaCol);
-    }
-    
-    function removeChildren(el)
-    {
-        while (el.firstChild)
-        el.removeChild(el.firstChild);
-    }
-    
-    function colourAllChars(el, doBG)
-    {
-        var newChildren = [];
-        var chars = el.innerText;
-        
-        chars.forEach(
-        function(char) {
-            var child = document.createElement("span");
-            child.setAttribute("class", "charOut");
-            colorAlphabetically(child, child, char.toLowerCase(), doBG);
-            
-            child.innerHTML = char;
-            
-            newChildren.push(child);
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            input: "",
+            method: "hsl"
+        },
+        computed: {
+            coloredChars: function() {
+                var conversionFunction = function() {return "red";}
+
+                if (this.method == "rgb") {
+                    conversionFunction = this.charToRGB;
+                } else if (this.method == "hsl") {
+                    conversionFunction = this.charToHSL;
+                }
+
+                return this.input.split("").map(function(character) {
+                    return {style: {"color": conversionFunction(character)}, char: character}
+                });
+            }
+        },
+        methods: {
+            charToRGB: function(char) {
+                return toShortHex(rescaleAlpha(char, colMax));
+            },
+            charToHSL: function(char) {
+                return "hsl(" + rescaleAlpha(char, 360) + ", 100%, 50%)"
+            }
         }
-        );
-        
-        removeChildren(el);
-        
-        newChildren.forEach(
-        function(child) {el.appendChild(child)}
-        );
-    }
-    
-    function setFromInput(el)
-    {
-        var input = el.value;
-        
-        colOut.innerText = input;
-        colourAllChars(colOut, false);
-    }
+    })
 </script>
