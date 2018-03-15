@@ -2,6 +2,8 @@
 import Hakyll
 import Data.Monoid ((<>))
 import System.FilePath.Posix
+import System.Directory
+import Data.List (intercalate)
 
 main :: IO ()
 main = hakyll $ do
@@ -43,8 +45,39 @@ main = hakyll $ do
             stuff <- loadAllSnapshots writingsGlob "content"
             renderRss feedConf feedContext stuff
 
-allContent :: Pattern
-allContent = fromList ["writings/**", "experiments/**"]
+    create ["sitemap.json"] $ do
+        route idRoute
+        compile $
+            unsafeCompiler (getFSTree "_site/")
+            >>= (return . serializeFSTree)
+            >>= makeItem
+
+data FSTree = File FilePath | Directory FilePath [FSTree] deriving (Show, Eq)
+
+-- Converts a FSTree to JSON using string concatenation
+-- TODO if this gets more complex: Use Aeson
+serializeFSTree :: FSTree -> String
+serializeFSTree (File path) = "\"" ++ path ++ "\""
+serializeFSTree (Directory path subtrees) = "{\"path\":\"" ++ path ++ "\", \"contents\":[" ++ (intercalate "," $ fmap serializeFSTree subtrees) ++ "]}"
+
+-- Make a FSTree from all the files/directories in a directory
+getFSTree :: FilePath -> IO FSTree
+getFSTree root =
+    go root ""
+        where
+        go root name = do
+            let actual = root </> name
+            putStrLn name
+            putStrLn root
+            putStrLn actual
+            isDir <- doesDirectoryExist actual
+
+            if isDir then do
+                listing <- listDirectory actual
+                subtree <- mapM (go actual) listing
+                return $ Directory name subtree
+            else
+                return $ File name
 
 writingsGlob :: Pattern
 writingsGlob = "writings/*.md"
