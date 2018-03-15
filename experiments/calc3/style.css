@@ -77,6 +77,7 @@ hr {
 
 .op {
     background: #8cb7c6;
+    color: black;
     display: flex;
     align-items: center;
     margin: 1em;
