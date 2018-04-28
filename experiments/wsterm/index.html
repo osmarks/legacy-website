@@ -1,0 +1,69 @@
+---
+title: Websocket Terminal
+---
+
+<div id="app"></div>
+<style>
+.messages li {
+    list-style-type: none;
+}
+
+.message-input {
+    width: 100%;
+}
+</style>
+<script src="//unpkg.com/hyperapp"></script>
+<script src="//unpkg.com/@hyperapp/html"></script>
+<script>
+const h = hyperappHtml;
+const push = (xs, x) => xs.concat([x]);
+
+const state = {
+    messages: [],
+    websocket: null
+};
+
+const actions = {
+    connect: value => (state, actions) => {
+        if (state.websocket !== null && state.websocket.close) state.websocket.close();
+        let ws = new WebSocket(value);
+        ws.addEventListener("message", ev => actions.message(ev.data));
+        ws.addEventListener("close", ev => actions.message("Connection closed"))
+        return {websocket: ws}},
+    message: value => state => ({messages: state.messages.concat([value])}),
+    send: value => state => {
+        if (state.websocket !== null && state.websocket.readyState === 1) {
+            state.websocket.send(value);
+        } else {
+            actions.message("Not connected.")
+        }
+    },
+    msgInput: event => (state, actions) => {
+        if (event.keyCode == 13) { // enter key
+            let val = event.target.value;
+            event.target.value = "";
+            actions.send(val);
+            return { messages: push(state.messages, val) };
+        }
+    },
+    urlInput: event => (state, actions) => {
+        if (event.keyCode == 13) { // enter key
+            let val = event.target.value;
+            actions.connect(val);
+        }
+    }
+};
+
+const cls = x => ({ class: x })
+
+const view = (state, actions) => h.div([
+    h.div([
+        h.input({ onkeyup: actions.urlInput })
+    ]),
+    h.ul(cls("messages"), state.messages.map(h.li)),
+    h.input(cls("message-input"), { onkeyup: actions.msgInput })
+]);
+
+const main = hyperapp.app(state, actions, view, document.getElementById("app"));
+main.connect("wss://osmarks.ml/ws");
+</script>
