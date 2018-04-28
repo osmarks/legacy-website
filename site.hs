@@ -9,13 +9,14 @@ main :: IO ()
 main = hakyll $ do
     match "templates/*" $ compile templateBodyCompiler
 
-    match "assets/js/*" passthrough
-
     match "assets/style/*" $ do
         route idRoute
         compile compressCssCompiler
 
     match "assets/images/*" passthrough
+    match "assets/js/*" passthrough
+
+    match "assets/*.html" $ inDefaultTemplate
 
     match "writings/**.md" $ do
         route $ setExtension "html" `composeRoutes` toSlug
@@ -26,6 +27,10 @@ main = hakyll $ do
     match "experiments/**" $ passthroughR removeFirstPart
 
     match "errors/**" inDefaultTemplate
+
+    match "go-to-root/**" $ do
+        route $ customRoute (takeFileName . toFilePath)
+        compile copyFileCompiler
 
     create ["writings/index.html"] $ do
         let pages = loadAll writingsGlob
@@ -48,8 +53,7 @@ main = hakyll $ do
     create ["sitemap.json"] $ do
         route idRoute
         compile $
-            unsafeCompiler (getFSTree "_site/")
-            >>= (return . serializeFSTree)
+            unsafeCompiler (serializeFSTree <$> getFSTree "_site/")
             >>= makeItem
 
 data FSTree = File FilePath | Directory FilePath [FSTree] deriving (Show, Eq)

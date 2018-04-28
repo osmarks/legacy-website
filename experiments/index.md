@@ -7,3 +7,6 @@ title: Experiments
 * [AutoScorer](/scorer/) can keep numerical scores during games. It was designed for use handling Monopoly money but is pretty generic.
 * [RPNCalc3](/calc3/) is like the RPNCalc above, but better. Now with subtraction! (Note about version numbers: v1 was a command-line program, v2 is the original available here, v3 is this)
 * The [Idea Generator](/ideagen/), home of terrible procedurally-generated ideas.
+
+I also have a bunch of stuff for the Minecraft mods ComputerCraft and OpenComputers.
+It can be found here, mostly: [my pastebin](https://pastebin.com/u/osmarks).
