@@ -8,7 +8,7 @@ title: Websocket Terminal
     list-style-type: none;
 }
 
-.message-input {
+#app input {
     width: 100%;
 }
 </style>
@@ -28,7 +28,8 @@ const actions = {
         if (state.websocket !== null && state.websocket.close) state.websocket.close();
         let ws = new WebSocket(value);
         ws.addEventListener("message", ev => actions.message(ev.data));
-        ws.addEventListener("close", ev => actions.message("Connection closed"))
+        ws.addEventListener("close", ev => actions.message("Connection closed."));
+        ws.addEventListener("open", ev => actions.message("Connected."));
         return {websocket: ws}},
     message: value => state => ({messages: state.messages.concat([value])}),
     send: value => state => {
@@ -41,6 +42,7 @@ const actions = {
     msgInput: event => (state, actions) => {
         if (event.keyCode == 13) { // enter key
             let val = event.target.value;
+            console.log(val)
             event.target.value = "";
             actions.send(val);
             return { messages: push(state.messages, val) };
@@ -61,9 +63,8 @@ const view = (state, actions) => h.div([
         h.input({ onkeyup: actions.urlInput })
     ]),
     h.ul(cls("messages"), state.messages.map(h.li)),
-    h.input(cls("message-input"), { onkeyup: actions.msgInput })
+    h.input({ onkeyup: actions.msgInput })
 ]);
 
 const main = hyperapp.app(state, actions, view, document.getElementById("app"));
-main.connect("wss://osmarks.ml/ws");
 </script>
