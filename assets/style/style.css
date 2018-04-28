@@ -9,7 +9,7 @@ nav {
     left: 0;
     width: 100%;
 
-    background-color: rgba(0, 0, 40, 0.5);
+    background-color: #000028;
 
     padding: 10px 0;
 }
@@ -20,9 +20,9 @@ nav a {
     font-size: 1.5rem;
 }
 
-nav table {
-    height: 1.2rem;
-    width: 1.2rem;
+nav td {
+    height: 0.5rem;
+    width: 0.5rem;
 }
 
 @media (orientation:portrait) {
@@ -41,9 +41,9 @@ nav table {
         display: block;
     }
 
-    nav table {
-        width: 10vw;
-        height: 10vw;
+    nav td {
+        height: 3vw;
+        width: 3vw;
     }
 }
 
@@ -52,6 +52,7 @@ nav table {
     src: url('https://fonts.gstatic.com/s/kreon/v10/a1jgjBwEF1FcIjUj3bw8cfesZW2xOQ-xsNqO47m55DA.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 html {
@@ -88,12 +89,11 @@ table.square-grid {
 }
 
 table.square-grid, table.square-grid tr, table.square-grid td {
-    border: 1px solid grey;
-    border-collapse: collapse;
+    border: none;
 }
 
 td.on {
-    background: black;
+    background: white;
 }
 
 td.off {
