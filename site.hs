@@ -13,10 +13,8 @@ main = hakyll $ do
         route idRoute
         compile compressCssCompiler
 
-    match "assets/images/*" passthrough
-    match "assets/js/*" passthrough
-
-    match "assets/*.html" $ inDefaultTemplate
+    match "assets/**.html" $ inDefaultTemplate
+    match "assets/**" passthrough
 
     match "writings/**.md" $ do
         route $ setExtension "html" `composeRoutes` toSlug

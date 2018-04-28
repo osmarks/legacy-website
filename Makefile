@@ -1,6 +1,6 @@
 site = stack run site
 
-default: clean build
+default: build
 
 deploy: build
 	rsync --delete -vrzle ssh _site/* $(destination)
