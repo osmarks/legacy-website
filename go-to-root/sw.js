@@ -24,11 +24,7 @@ self.addEventListener('fetch', function(event) {
 var checkResponse = function(request){
     return new Promise(function(fulfill, reject) {
         fetch(request).then(function(response){
-            if(response.status !== 404) {
-                fulfill(response)
-            } else {
-                reject()
-            }
+            fulfill(response);
         }, reject)
     });
 };
@@ -45,7 +41,7 @@ var addToCache = function(request){
 var returnFromCache = function(request){
     return caches.open(cacheName).then(function (cache) {
         return cache.match(request).then(function (matching) {
-            if(!matching || matching.status == 404) {
+            if(!matching) {
                 return cache.match(offline)
             } else {
                 return matching
