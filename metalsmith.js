@@ -41,7 +41,8 @@ let m = Metalsmith(__dirname)
     }
   }))
   .use(permalinks({
-    "pattern": ":slug"
+    "pattern": ":slug",
+    "relative": false
   }))
   .use(layout({
     "engine": "pug",
