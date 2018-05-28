@@ -2,3 +2,7 @@
 .stack-work
 _cache
 _site
+/target
+**/*.rs.bk
+node_modules
+build
