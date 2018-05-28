@@ -21,7 +21,7 @@ When you use this website's git hosting, and sign in, this data may also be stor
 * anything you input (including, probably, name, email and password (hashed))
 This is, obviously, used to allow signin.
 
-When you use the comment system, this data will also be collected:
+When you use the comment system, this data will also be stored:
 * your comment
 * your email/name/website (optional)
 
