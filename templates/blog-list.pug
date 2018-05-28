@@ -1,0 +1,9 @@
+extends default.pug
+
+block contents
+    div.main-content
+        ul
+            each page in blog
+                li
+                    - let path = "/" + page.path
+                    a(href=path) #{page.title}

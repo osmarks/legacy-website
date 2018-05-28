@@ -1,15 +1,13 @@
-site = stack run site
+build: node_modules
+	node metalsmith.js
 
-default: build
+node_modules: package.json
+	npm install
+
+serve:
+	node node_modules/.bin/metalsmith-start
 
 deploy: build
-	rsync --delete -vrzle ssh _site/* $(destination)
+	rsync --delete -vrzle ssh build/* $(destination)
 
-clean:
-	$(site) clean
-
-build:
-	$(site) build
-
-rebuild:
-	$(site) rebuild
+.PHONY: build

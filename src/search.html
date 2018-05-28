@@ -1,0 +1,29 @@
+---
+title: Search
+description: Only searches HTML on website
+---
+
+<input type="text" class="search-input" placeholder="search posts..">
+<br/>
+<div id="results-container"></div>
+<script src="https://unpkg.com/simple-jekyll-search@1.5.0/dest/simple-jekyll-search.min.js"></script>
+<script>
+    let lastURL;
+    // For some bizarre reason SimpleJekyllSearch won't do it itself, so feed it some JSON directly
+    fetch("/search.json").then(r => r.json()).then(j => 
+        SimpleJekyllSearch({
+            searchInput: document.querySelector('.search-input'),
+            resultsContainer: document.getElementById('results-container'),
+            json: j,
+            searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+            limit: 1000000,
+            templateMiddleware: (k, v, template) => {
+                console.log(k, v, template)
+                if (k == "title" && (v == undefined) || (v == null)) {
+                    return lastURL || "[no title data available]"
+                } else if (k == "url") {
+                    lastURL = v;
+                }
+            }
+    }));
+</script>

@@ -1,0 +1,113 @@
+nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    background-color: #000028;
+
+    padding: 10px 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+nav td {
+    height: 0.5rem;
+    width: 0.5rem;
+}
+
+@media (orientation:portrait) {
+    /* when in portrait, make sure that all links are on separate lines */
+    nav a {
+        font-size: 5vmax;
+        display: block;
+        text-align: center;
+
+        display: flex;
+        justify-content: center;
+    }
+
+    nav {
+        position: static;
+        display: block;
+    }
+
+    nav td {
+        height: 3vw;
+        width: 3vw;
+    }
+}
+
+@font-face {
+    font-family: 'kreonlight';
+    src: url('https://fonts.gstatic.com/s/kreon/v10/a1jgjBwEF1FcIjUj3bw8cfesZW2xOQ-xsNqO47m55DA.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+html {
+    font-family: "kreonlight", "Segoe UI Light", "Helvetica";
+}
+
+.main-content {
+    padding: 2vw;
+    font-size: 1.2em;
+}
+
+@media(orientation:portrait) {
+    .main-content {
+        font-size: 4vmin;
+    }
+}
+
+body {
+    margin: 0;
+}
+
+pre {
+    padding-left: 3vw;
+    padding-right: 3vw;
+    width: calc(100% - 6vw);
+}
+
+pre code {
+    font-family: "Fira Code", "Consolas", "Courier New", monospace;
+}
+
+table.square-grid {
+    table-layout: fixed;
+}
+
+table.square-grid, table.square-grid tr, table.square-grid td {
+    border: none;
+}
+
+td.on {
+    background: white;
+}
+
+td.off {
+    background: transparent;
+}
+
+.no-underline {
+    text-decoration: none;
+}
+
+.titling {
+    padding-left: 3vw;
+}
+
+#isso-thread > h4 {
+    text-align: center;
+}
