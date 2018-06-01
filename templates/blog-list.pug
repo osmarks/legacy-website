@@ -6,4 +6,4 @@ block contents
             each page in blog
                 li
                     - let path = "/" + page.path
-                    a(href=path) #{page.title}
+                    a(href=path) #{page.title} (#{page.description})
