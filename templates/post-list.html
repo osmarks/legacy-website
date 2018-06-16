@@ -1,0 +1,10 @@
+<ul style="list-style: none; padding: 0;">
+    $for(posts)$
+        <li>
+            <a href="$url$" style="text-decoration: none; color: black">
+                <h3 style="display: inline">$title$</h3> $if(description)$ - <em style="display: inline">$description$</em> $endif$
+                $if(teaser)$ <div class="excerpt">$teaser$</div> $endif$
+            </a>
+        </li>
+    $endfor$
+</ul>

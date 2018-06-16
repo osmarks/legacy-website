@@ -1,0 +1,22 @@
+.sourceCode {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    background: #232323;
+    color: #e6e1dc;
+
+}
+div.sourceCode {
+    border: solid white 1px;
+    border-right: none;
+    border-left: none;
+}
+
+.sourceCode .co, .sourceCode .st { color: #bc9458; font-style: italic; }
+.sourceCode .kw { color: #c26230; }
+.sourceCode .ss, .sourceCode .va, .sourceCode .ot { color: #a5c261; }
+.sourceCode .dv { color: #519f50; }
+.sourceCode .im, .sourceCode .at { color: #e8bf6a; }
+.sourceCode .dt { color: #da4939; }
+.sourceCode .op, .sourceCode .fu, .sourceCode .bu { color: #6d9cbe; }
+.sourceCode .pp { color: #9b859d; }

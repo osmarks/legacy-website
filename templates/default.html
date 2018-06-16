@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>$title$ @ $site-name$</title>
+        <link rel="stylesheet" href="/assets/css/index.css" />
+        <link rel="stylesheet" href="/assets/css/kreon.css" />
+        <link rel="manifest" href="/assets/manifest.webmanifest" />
+        <link rel="icon" href="/assets/images/icon.png" />
+        <meta name="google-site-verification" content="F6P4moGYaKEFCLBrNmAZjhn6sEJ7zQTZpUQIW1Z4PZA" />
+        <script src="/assets/js/sw-register.js" defer></script>
+        <meta name="theme-color" content="#000028" />
+    </head>
+    <body>
+        <div id="nav-container">
+            <nav>
+                $partial("templates/nav.html")$                
+            </nav>
+        </div>
+
+        <main role="main">
+            <h1>$title$</h1>
+            $if(description)$
+                <em>$description$</em>
+            $endif$
+            $body$
+        </main>
+
+        <section class="comments">
+            <section id="isso-thread"></section>
+            <script src="/comments/js/embed.min.js" defer></script>
+        </section>
+    </body>
+</html>
