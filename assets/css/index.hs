@@ -11,35 +11,24 @@ themeCol = Rgba 0 0 0x28 1.0
 
 navbar :: Css
 navbar = nav ? do
-    let mrgn = rem 2
-    margin mrgn mrgn mrgn mrgn
-    borderColor themeCol
-    "border-style" -: "double"
+    let pad = rem 1
+    padding pad pad pad pad
 
     a ? do
-        display block
         textDecoration none
-        color black
+        color white
+        fontSize (rem 2)
         display flex
         justifyContent center
-        
-        let leftRightP = rem 1
-        let bottomTopP = rem 0.25
-        padding bottomTopP leftRightP bottomTopP leftRightP
-        fontSize (rem 1.5)
+        alignItems center
 
-    "#site-name" ? do
-        background themeCol
-        color white
-        let bottomTopP = rem 1
-        paddingBottom bottomTopP
-        paddingTop bottomTopP
+    background themeCol
+    display flex
+    justifyContent spaceAround
 
 body_ :: Css
 body_ = body ? do
     margin nil nil nil nil
-    display flex
-    justifyContent center
 
 pageContent :: Css
 pageContent = "main" ? do
@@ -54,6 +43,7 @@ comments :: Css
 comments = "#isso-thread" ? do
     let margn = rem 2.0
     important (margin nil margn nil margn)
+    h4 ? textAlign center
 
 css :: Css
 css = do
@@ -64,7 +54,7 @@ css = do
 
 -- The Clay media query thing seems kind of broken, so this is a bit of a bodge to insert a little bit of CSS
 rawCss :: Text
-rawCss = "@media(orientation:portrait){body{display:block;font-size:1.5rem;}}"
+rawCss = "@media(max-width:1000px){body{display:block;font-size:1.2rem;}nav{display:block}}"
 
 main :: IO ()
 main = T.putStr $ renderWith compact [] css <> rawCss

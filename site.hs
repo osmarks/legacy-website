@@ -20,9 +20,9 @@ main = hakyllWith config $ do
     match "index.html" $ do
         route idRoute
         compile $ do
-            posts <- allContent
             let indexCtx =
-                    listField "posts" ctx (return posts) <>
+                    listField "experiments" ctx experiments <>
+                    listField "blog" ctx blog <>
                     constField "title" "Home" <>
                     ctx
 
@@ -62,11 +62,17 @@ niceURL = customRoute (indexAndMove . toFilePath)
         indexAndMove p = takeBaseName p </> "index.html"
         
 
+experiments :: Compiler [Item String]
+experiments = loadAll "experiments/**.html" >>= recentFirst'
+
+blog :: Compiler [Item String]
+blog = loadAll "blog/*" >>= recentFirst'
+
 allContent :: Compiler [Item String]
 allContent = do
-    experiments <- loadAll "experiments/**.html"
-    blog <- loadAll "blog/*"
-    recentFirst' (blog ++ experiments)
+    blg <- blog
+    exp <- experiments
+    recentFirst' (blg ++ exp)
 
 compileHTML :: Compiler (Item String)
 compileHTML = getResourceBody >>= loadAndApplyTemplate "templates/default.html" (teaserField "teaser" "content" <> ctx) >>= relativizeUrls
@@ -109,14 +115,14 @@ ctx =
 
 feedConf :: FeedConfiguration
 feedConf = FeedConfiguration
-    { feedTitle = "osmarks.ml feed"
+    { feedTitle = "osmarks.tk feed"
     , feedDescription = "Random Stuff, Subscribable To"
     , feedAuthorName = "Oliver Marks"
     , feedAuthorEmail = "osmarks@protonmail.com"
-    , feedRoot = "https://osmarks.ml/"
+    , feedRoot = "https://osmarks.tk/"
     }
 
 config :: Configuration
 config = defaultConfiguration
-    { deployCommand = "rsync --delete -vrzle ssh _site/* osmarksml:/data/web"
+    { deployCommand = "rsync --delete -vrzle ssh _site/* osmarkstk:/data/web"
     }

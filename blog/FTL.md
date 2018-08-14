@@ -1,7 +1,5 @@
 ---
 title: FTL tips
-slug: ftl
-
 description: We are not responsible if these tips cause your ship to implode/explode.
 ---
 * Use Cloaking *after* enemy weapons have fired so that they miss.

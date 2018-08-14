@@ -4,7 +4,7 @@
     "name": "Oliver's Website",
     "scope": "/",
     "display": "browser",
-    "start_url": "https://osmarks.ml/",
+    "start_url": "https://osmarks.tk/",
     "short_name": "osmarksml",
     "theme_color": "transparent",
     "description": "Whimsical uselessness available conveniently online.",
@@ -14,7 +14,7 @@
     "prefer_related_applications": "false",
     "icons": [
         {
-            "src": "https://osmarks.ml/assets/images/icon.png?reloadyoustupidicon=3",
+            "src": "/assets/images/icon.png?reloadyoustupidicon=3",
             "sizes": "96x96"
         }
     ]
