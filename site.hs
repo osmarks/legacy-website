@@ -60,7 +60,6 @@ niceURL :: Routes
 niceURL = customRoute (indexAndMove . toFilePath)
     where
         indexAndMove p = takeBaseName p </> "index.html"
-        
 
 experiments :: Compiler [Item String]
 experiments = loadAll "experiments/**.html" >>= recentFirst'
@@ -75,7 +74,7 @@ allContent = do
     recentFirst' (blg ++ exp)
 
 compileHTML :: Compiler (Item String)
-compileHTML = getResourceBody >>= loadAndApplyTemplate "templates/default.html" (teaserField "teaser" "content" <> ctx) >>= relativizeUrls
+compileHTML = getResourceBody >>= loadAndApplyTemplate "templates/default.html" (teaserField "teaser" "content" <> ctx)
 
 compileMarkdown :: Compiler (Item String)
 compileMarkdown = pandocCompiler
