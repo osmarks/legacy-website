@@ -55,6 +55,8 @@ main = hakyllWith config $ do
     create ["rss.xml"] $ do
         route idRoute
         compile $ renderRss feedConf ctx =<< allContent
+    
+    match  "stuff/**" $ route idRoute >>= compile copyFileCompiler
 
 niceURL :: Routes
 niceURL = customRoute (indexAndMove . toFilePath)
@@ -75,7 +77,7 @@ allContent = do
     recentFirst' (blg ++ exp)
 
 compileHTML :: Compiler (Item String)
-compileHTML = getResourceBody >>= loadAndApplyTemplate "templates/default.html" (teaserField "teaser" "content" <> ctx) >>= relativizeUrls
+compileHTML = getResourceBody >>= loadAndApplyTemplate "templates/default.html" (teaserField "teaser" "content" <> ctx)
 
 compileMarkdown :: Compiler (Item String)
 compileMarkdown = pandocCompiler
