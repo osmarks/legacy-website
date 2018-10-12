@@ -63,7 +63,7 @@ setInterval(() => {
 
 const actions = {
     connect: value => (state, actions) => {
-        if (state.websocket !== null && state.websocket.close) state.websocket.close();
+        if (state.websocket != null && state.websocket.close) state.websocket.close();
         let ws = new WebSocket(value);
         ws.addEventListener("message", ev => {
             actions.message([ev.data, "remote"]);
@@ -91,6 +91,7 @@ const actions = {
     urlInput: event => (state, actions) => {
         if (event.keyCode == 13) { // enter key
             let val = event.target.value;
+            console.log(val);
             actions.connect(val);
         }
     }

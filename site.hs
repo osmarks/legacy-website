@@ -55,8 +55,6 @@ main = hakyllWith config $ do
     create ["rss.xml"] $ do
         route idRoute
         compile $ renderRss feedConf ctx =<< allContent
-    
-    match  "stuff/**" $ route idRoute >>= compile copyFileCompiler
 
 niceURL :: Routes
 niceURL = customRoute (indexAndMove . toFilePath)
@@ -125,5 +123,5 @@ feedConf = FeedConfiguration
 
 config :: Configuration
 config = defaultConfiguration
-    { deployCommand = "rsync --delete -vrzle ssh _site/* osmarkstk:/data/web"
+    { deployCommand = "rsync --delete -vrzle ssh _site/* osmarkstk:/var/www"
     }
