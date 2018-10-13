@@ -1,0 +1,44 @@
+---
+title: Infipage
+description: Outdoing all other websites with <em>INFINITE PAGES!</em>
+---
+<style>
+    #prev, #next {
+        text-decoration: none;
+    }
+
+    #main {
+        padding-top: 10vh;
+        font-size: 2em;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    #main.mobile {
+        display: block;
+        text-align: center;
+    }
+</style>
+<div id="main">
+    <a id="prev">Previous Page</a>
+    <div id="pagecount"></div>
+    <a id="next">Next Page</a>
+</div>
+<script>
+    var page;
+    var prev = document.querySelector("#prev"), next = document.querySelector("#next"), count = document.querySelector("#pagecount"), main = document.querySelector("#main")
+    function loadPage() {
+        page = parseInt(window.location.hash.replace("#", "")) || 0
+        console.log("Page", page)
+        prev.href = "#" + (page - 1)
+        next.href = "#" + (page + 1)
+        pagecount.innerText = "Page " + page
+    }
+    loadPage()
+    function loadPageAsync() {
+        setTimeout(loadPage, 10)
+    }
+    prev.addEventListener("click", loadPageAsync)
+    next.addEventListener("click", loadPageAsync)
+    if (window.ontouchstart) { main.classList.add("mobile") }
+</script>
