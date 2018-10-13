@@ -1,6 +1,7 @@
 ---
 title: Infipage
 description: Outdoing all other websites with <em>INFINITE PAGES!</em>
+url: /infipage/0
 ---
 <style>
     #prev, #next {
@@ -28,17 +29,17 @@ description: Outdoing all other websites with <em>INFINITE PAGES!</em>
     var page;
     var prev = document.querySelector("#prev"), next = document.querySelector("#next"), count = document.querySelector("#pagecount"), main = document.querySelector("#main")
     function loadPage() {
-        page = parseInt(window.location.hash.replace("#", "")) || 0
+        try {
+            page = parseInt(/infipage\/(\-?\d+)/.exec(window.location.pathname)[1]) || 0
+            console.warn("Invalid Page")
+        } catch(e) {
+            page = 0
+        }
         console.log("Page", page)
-        prev.href = "#" + (page - 1)
-        next.href = "#" + (page + 1)
+        prev.href = "" + (page - 1)
+        next.href = "" + (page + 1)
         pagecount.innerText = "Page " + page
     }
     loadPage()
-    function loadPageAsync() {
-        setTimeout(loadPage, 10)
-    }
-    prev.addEventListener("click", loadPageAsync)
-    next.addEventListener("click", loadPageAsync)
     if (window.ontouchstart) { main.classList.add("mobile") }
 </script>
